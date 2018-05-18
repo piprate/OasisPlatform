@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import RoleMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -17,6 +18,13 @@ default_credentials_users = db.Table(
     'default_credentials_users',
     db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
     db.Column('default_credentials_id', db.Integer(), db.ForeignKey('default_credentials.id'))
+)
+
+
+user_file_users = db.Table(
+    'user_file_users',
+    db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+    db.Column('userfile_id', db.Integer(), db.ForeignKey('user_file.id'))
 )
 
 
@@ -61,3 +69,10 @@ class DefaultCredentials(db.Model):
     def set_password(self, plaintext_password):
         hashed_password = generate_password_hash(plaintext_password)
         self.password = hashed_password
+
+
+class UserFile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.Text(), unique=True, nullable=False)
+    created_date = db.Column(db.DateTime(), default=datetime.utcnow)
+    user = db.relationship('User', uselist=False, secondary=user_file_users, backref=db.backref('user_file', lazy='dynamic'))
