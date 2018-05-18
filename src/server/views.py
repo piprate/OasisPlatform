@@ -504,7 +504,7 @@ def refresh_token():
     return jsonify(data), 200
 
 
-@root.route('/access_token', methods=['post'])
+@root.route('/access_token', methods=['POST'])
 @jwt_refresh_token_required
 def access_token():
     expires_delta = timedelta(seconds=3600)
@@ -523,3 +523,11 @@ def validate_analysis_settings(analysis_settings):
         'module_supplier_id' in analysis_settings['analysis_settings'] and
         'model_version_id' in analysis_settings['analysis_settings']
     )
+
+
+@root.route('/account_files', methods=['POST'])
+@jwt_refresh_token_required
+def account_file_upload():
+    import ipdb;ipdb.set_trace()
+    request.files
+    pass
