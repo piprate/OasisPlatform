@@ -22,7 +22,9 @@ services:
     image: model_execution_worker
     links:
      - mysql:mysql
+     - mysql:oasis_mysql
      - rabbit:myrabbit
+     - rabbit:oasis_rabbit
     environment:
      - MODEL_SUPPLIER_ID=OasisIM
      - MODEL_VERSION_ID=1
@@ -53,7 +55,7 @@ services:
     entrypoint:
       - flower 
       - --port=5555 
-      - --broker_api=http://guest:guest@rabbit:5672/api/"
+      - --broker_api=http://guest:guest@rabbit:15672/api/"
     links:
      - mysql
-     - rabbit
+     - rabbit:rabbit

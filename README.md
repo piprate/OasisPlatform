@@ -33,7 +33,7 @@ Check that the server is running:
 
 To run a test analysis using the worker image and example model data, run the following command:
     
-    docker exec oasisapi_runner_1 sh run_api_test_analysis.sh
+    docker exec -it oasisplatform_runner_1 sh run_api_test_analysis.sh
 
 ### Calling the Server
 
